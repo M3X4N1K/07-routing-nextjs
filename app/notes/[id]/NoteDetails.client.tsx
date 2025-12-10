@@ -1,37 +1,38 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import { fetchNoteById } from '@/lib/api';
 import css from './NoteDetails.module.css';
 
-const NoteDetailsClient = () => {
-  const { id } = useParams<{ id: string }>();
+interface NoteDetailsClientProps {
+  noteId: string;
+}
 
+const NoteDetailsClient = ({ noteId }: NoteDetailsClientProps) => {
   const {
     data: note,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['note', id],
-    queryFn: () => fetchNoteById(id),
+    queryKey: ['note', noteId],
+    queryFn: () => fetchNoteById(noteId),
     refetchOnMount: false,
   });
 
   if (isLoading) return <p>Loading...</p>;
-
-  if (error || !note) return <p>Some error..</p>;
+  if (error || !note) return <p>Note not found</p>;
 
   return (
     <div className={css.container}>
       <div className={css.item}>
         <div className={css.header}>
           <h2>{note.title}</h2>
-          {/* Відображаємо тег, якщо він є */}
           {note.tag && <span className={css.tag}>{note.tag}</span>}
         </div>
         <p className={css.content}>{note.content}</p>
-        <p className={css.date}>{note.createdAt}</p>
+        <p className={css.date}>
+          {new Date(note.createdAt).toLocaleDateString()}
+        </p>
       </div>
     </div>
   );
