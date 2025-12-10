@@ -10,7 +10,11 @@ export default function NotePreviewModal() {
   const params = useParams();
   const id = params.id as string;
 
-  const { data: note, isLoading, error } = useQuery({
+  const {
+    data: note,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
   });

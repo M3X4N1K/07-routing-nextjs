@@ -10,6 +10,6 @@ const Error = ({ error }: Props) => {
       <p>{error.message}</p>
     </div>
   );
-}
+};
 
 export default Error;

@@ -10,7 +10,11 @@ export default function FilteredNotesPage() {
   const params = useParams();
   const tag = params.tag?.[0];
 
-  const { data: notes, isLoading, error } = useQuery({
+  const {
+    data: notes,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['notes', tag === 'all' ? undefined : tag],
     queryFn: () => fetchNotes(tag === 'all' ? undefined : tag),
   });

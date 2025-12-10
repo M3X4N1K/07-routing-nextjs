@@ -2,10 +2,10 @@
 
 type Props = {
   error: Error;
-  reset: () => void; 
+  reset: () => void;
 };
 
-export default function NoteError({ error }: Props) { 
+export default function NoteError({ error }: Props) {
   return (
     <div>
       <h2>Помилка при завантаженні</h2>

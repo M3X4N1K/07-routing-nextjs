@@ -47,7 +47,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
 
   const handleSubmit = (
     values: FormValues,
-    helpers: FormikHelpers<FormValues>,
+    helpers: FormikHelpers<FormValues>
   ) => {
     const { title, content, tag } = values;
 
@@ -55,7 +55,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
       { title, content, tag: tag as NoteTag },
       {
         onSettled: () => helpers.setSubmitting(false),
-      },
+      }
     );
   };
 

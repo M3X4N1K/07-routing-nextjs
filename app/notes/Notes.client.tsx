@@ -20,9 +20,9 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
-  
-  const { data, isLoading, isError, isFetching } =
-    useQuery<FetchNotesResponse>({
+
+  const { data, isLoading, isError, isFetching } = useQuery<FetchNotesResponse>(
+    {
       queryKey: ['notes', page, debouncedSearch],
       queryFn: () =>
         fetchNotes({
@@ -30,15 +30,16 @@ export default function App() {
           perPage: PER_PAGE,
           search: debouncedSearch || undefined,
         }),
-      placeholderData: keepPreviousData, 
-    });
+      placeholderData: keepPreviousData,
+    }
+  );
 
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
-  
+
   const handleSearchChange = (value: string) => {
     setSearch(value);
-    setPage(1); 
+    setPage(1);
   };
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -53,18 +54,10 @@ export default function App() {
         <SearchBox value={search} onChange={handleSearchChange} />
 
         {showPagination && (
-          <Pagination
-            page={page}
-            totalPages={totalPages}
-            onChange={setPage}
-          />
+          <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         )}
 
-        <button
-          type="button"
-          className={css.button}
-          onClick={handleOpenModal}
-        >
+        <button type="button" className={css.button} onClick={handleOpenModal}>
           Create note +
         </button>
       </header>
