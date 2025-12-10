@@ -8,9 +8,8 @@ import css from './page.module.css';
 
 export default function FilteredNotesPage() {
   const params = useParams();
-  const tag = params.tag?.[0]; // Отримуємо перший сегмент з catch-all
+  const tag = params.tag?.[0];
 
-  // Якщо tag === 'all', не передаємо параметр tag в запит
   const { data: notes, isLoading, error } = useQuery({
     queryKey: ['notes', tag === 'all' ? undefined : tag],
     queryFn: () => fetchNotes(tag === 'all' ? undefined : tag),
@@ -20,10 +19,10 @@ export default function FilteredNotesPage() {
   if (error) return <p>Error loading notes</p>;
 
   return (
-    <div className={css.container}>
-      <h2 className={css.title}>
-        {tag === 'all' ? 'All Notes' : `Notes: ${tag}`}
-      </h2>
+    <div className={css.app}>
+      <div className={css.toolbar}>
+        <h2>{tag === 'all' ? 'All Notes' : `Notes: ${tag}`}</h2>
+      </div>
       <NoteList notes={notes || []} />
     </div>
   );

@@ -15,7 +15,7 @@ export default function FilterLayout({
   return (
     <div className={css.container}>
       <aside className={css.sidebar}>{sidebar}</aside>
-      <main className={css.content}>{content || children}</main>
+      <main className={css.notesWrapper}>{content || children}</main>
     </div>
   );
 }
