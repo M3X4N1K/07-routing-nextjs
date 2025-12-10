@@ -9,11 +9,7 @@ interface NoteDetailsClientProps {
 }
 
 const NoteDetailsClient = ({ noteId }: NoteDetailsClientProps) => {
-  const {
-    data: note,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: note, isLoading, error } = useQuery({
     queryKey: ['note', noteId],
     queryFn: () => fetchNoteById(noteId),
     refetchOnMount: false,

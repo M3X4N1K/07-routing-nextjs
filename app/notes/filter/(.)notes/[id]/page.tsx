@@ -19,7 +19,6 @@ export default function NotePreviewModal() {
   return (
     <Modal>
       <div className={css.container}>
-        {/* Передаємо id як пропс у NoteDetailsClient */}
         <NoteDetailsClient noteId={id} />
       </div>
     </Modal>
