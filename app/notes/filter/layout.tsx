@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
-import css from "./layout.module.css";
+'use client';
+import { ReactNode } from 'react';
+import css from './layout.module.css';
 
 interface FilterLayoutProps {
   sidebar: ReactNode;
@@ -7,11 +8,7 @@ interface FilterLayoutProps {
   children: ReactNode;
 }
 
-export default function FilterLayout({
-  sidebar,
-  modal,
-  children,
-}: FilterLayoutProps) {
+export default function FilterLayout({ sidebar, modal, children }: FilterLayoutProps) {
   return (
     <>
       <div className={css.container}>
