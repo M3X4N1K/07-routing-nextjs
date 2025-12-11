@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import css from './layout.module.css';
+import { ReactNode } from "react";
+import css from "./layout.module.css";
 
 interface FilterLayoutProps {
   sidebar: ReactNode;

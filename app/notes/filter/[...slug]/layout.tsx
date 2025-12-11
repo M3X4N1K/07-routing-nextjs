@@ -5,6 +5,5 @@ interface SlugLayoutProps {
 }
 
 export default function SlugLayout({ children }: SlugLayoutProps) {
-  // Прокладка для маршруту [...slug]
   return <>{children}</>;
 }
