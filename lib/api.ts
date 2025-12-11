@@ -24,7 +24,11 @@ export interface UpdateNoteBody {
   tag?: string;
 }
 
-// ✅ Додано дженерик типи <FetchNotesResponse>
+// Експорт з псевдонімом для сумісності
+export type CreateNotePayload = CreateNoteBody;
+export type UpdateNotePayload = UpdateNoteBody;
+
+// Отримання списку нотаток з фільтрацією, пошуком та пагінацією
 export async function fetchNotes(params?: {
   page?: number;
   perPage?: number;
@@ -43,19 +47,19 @@ export async function fetchNotes(params?: {
   return response.data;
 }
 
-// ✅ Додано дженерик типи <Note>
+// Отримання однієї нотатки за ID
 export async function fetchNoteById(id: string): Promise<Note> {
   const response = await axios.get<Note>(`${API_URL}/${id}`);
   return response.data;
 }
 
-// ✅ Додано дженерик типи <Note>
+// Створення нової нотатки
 export async function createNote(body: CreateNoteBody): Promise<Note> {
   const response = await axios.post<Note>(API_URL, body);
   return response.data;
 }
 
-// ✅ Додано дженерик типи <Note>
+// Оновлення нотатки
 export async function updateNote(
   id: string,
   body: UpdateNoteBody
@@ -64,7 +68,7 @@ export async function updateNote(
   return response.data;
 }
 
-// ✅ Додано дженерик типи <void>
+// Видалення нотатки
 export async function deleteNote(id: string): Promise<void> {
   await axios.delete<void>(`${API_URL}/${id}`);
 }
