@@ -1,8 +1,12 @@
 import axios from "axios";
 import type { Note, NoteTag } from "../../types/note";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api/notes";
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVqaWsuYWxleDkyOTRAZ21haWwuY29tIiwiaWF0IjoxNzY1MTM0NzY1fQ.BZGm_DbZ1-a-3yZHvgf_Tr7COSbmRFl570_sYsM1v-k";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api/notes";
+
+const token =
+  process.env.NEXT_PUBLIC_NOTEHUB_TOKEN ??
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVqaWsuYWxleDkyOTRAZ21haWwuY29tIiwiaWF0IjoxNzY1MTM0NzY1fQ.BZGm_DbZ1-a-3yZHvgf_Tr7COSbmRFl570_sYsM1v-k";
 
 const api = axios.create({
   baseURL: API_URL,

@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { TAGS } from '@/lib/api/tags';
-import css from './page.module.css';
+import Link from "next/link";
+import { TAGS } from "@/lib/api/tags";
+import css from "./page.module.css";
 
 export default function SidebarNotes() {
   return (
