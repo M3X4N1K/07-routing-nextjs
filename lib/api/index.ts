@@ -33,6 +33,7 @@ export interface FetchNotesResponse {
   total: number;
   page: number;
   perPage: number;
+  totalPages: number; // ← ДОДАНО
 }
 
 // ==========================
@@ -57,7 +58,15 @@ export async function fetchNotes(params?: {
     },
   });
 
-  return response.data;
+  // Якщо сервер не повертає totalPages, розрахуємо самі
+  const total = response.data.total ?? 0;
+  const totalPages =
+    response.data.totalPages ?? Math.ceil(total / perPage);
+
+  return {
+    ...response.data,
+    totalPages,
+  };
 }
 
 // --- Отримати одну нотатку
