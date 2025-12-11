@@ -1,24 +1,20 @@
-import Link from "next/link";
-import { TAGS } from "@/lib/api/tags";
-import css from "./page.module.css";
+'use client';
+
+import Link from 'next/link';
+import css from './page.module.css';
+
+const tags = ['all', 'Work', 'Personal', 'Study', 'Other'];
 
 export default function SidebarNotes() {
   return (
-    <nav>
-      <ul className={css.menuList}>
-        <li className={css.menuItem}>
-          <Link href="/notes/filter/all" className={css.menuLink}>
-            All notes
+    <ul className={css.menuList}>
+      {tags.map(tag => (
+        <li key={tag} className={css.menuItem}>
+          <Link href={tag === 'all' ? '/notes/filter/all' : `/notes/filter/${tag}`} className={css.menuLink}>
+            {tag}
           </Link>
         </li>
-        {TAGS.map((tag) => (
-          <li key={tag} className={css.menuItem}>
-            <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
-              {tag}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+      ))}
+    </ul>
   );
 }
