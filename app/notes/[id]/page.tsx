@@ -4,7 +4,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import Modal from '@/components/Modal/Modal';
-import NotePreview from '@/components/NotePreview/NotePreview';
+import css from './page.module.css'; // створимо стилі для модалки
 
 export default function NotePage() {
   const router = useRouter();
@@ -18,12 +18,32 @@ export default function NotePage() {
 
   const handleClose = () => router.back();
 
-  if (isLoading) return <Modal onClose={handleClose}><p>Loading...</p></Modal>;
-  if (error || !note) return <Modal onClose={handleClose}><p>Note not found</p></Modal>;
+  if (isLoading) {
+    return (
+      <Modal onClose={handleClose}>
+        <p>Loading...</p>
+      </Modal>
+    );
+  }
+
+  if (error || !note) {
+    return (
+      <Modal onClose={handleClose}>
+        <p>Note not found</p>
+      </Modal>
+    );
+  }
 
   return (
     <Modal onClose={handleClose}>
-      <NotePreview note={note} />
+      <div className={css.container}>
+        <h2 className={css.title}>{note.title}</h2>
+        {note.tag && <span className={css.tag}>{note.tag}</span>}
+        <p className={css.content}>{note.content}</p>
+        <p className={css.date}>
+          {new Date(note.createdAt).toLocaleDateString()}
+        </p>
+      </div>
     </Modal>
   );
 }
