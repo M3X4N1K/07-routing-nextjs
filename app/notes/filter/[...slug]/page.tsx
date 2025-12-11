@@ -16,8 +16,8 @@ const PER_PAGE = 12;
 export default function FilteredNotesPage() {
   const params = useParams();
   const slug = params.slug as string[];
-  const tag = slug?.[0]; // Перший сегмент з [...slug]
-  
+  const tag = slug?.[0];
+
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,16 +27,11 @@ export default function FilteredNotesPage() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['notes', page, search, queryTag],
     queryFn: () =>
-      fetchNotes({
-        page,
-        perPage: PER_PAGE,
-        search: search || undefined,
-        tag: queryTag,
-      }),
+      fetchNotes({ page, perPage: PER_PAGE, search: search || undefined, tag: queryTag }),
   });
 
   const notes = data?.notes ?? [];
-  const totalPages = data?.totalPages ?? 0;
+  const totalPages = data?.totalPages ?? Math.ceil((data?.total ?? 0) / PER_PAGE);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -50,16 +45,10 @@ export default function FilteredNotesPage() {
     <div className={css.app}>
       <div className={css.toolbar}>
         <SearchBox value={search} onChange={handleSearchChange} />
-
         {totalPages > 1 && (
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         )}
-
-        <button
-          type="button"
-          className={css.button}
-          onClick={() => setIsModalOpen(true)}
-        >
+        <button type="button" className={css.button} onClick={() => setIsModalOpen(true)}>
           Create note +
         </button>
       </div>

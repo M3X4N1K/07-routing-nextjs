@@ -20,21 +20,12 @@ export default function NotePreviewModal() {
     router.back();
   };
 
-  if (isLoading) {
-    return (
-      <Modal onClose={handleClose}>
-        <p>Loading...</p>
-      </Modal>
-    );
-  }
-
-  if (error || !note) {
-    return (
-      <Modal onClose={handleClose}>
-        <p>Note not found</p>
-      </Modal>
-    );
-  }
+  if (isLoading) return (
+    <Modal onClose={handleClose}><p>Loading...</p></Modal>
+  );
+  if (error || !note) return (
+    <Modal onClose={handleClose}><p>Note not found</p></Modal>
+  );
 
   return (
     <Modal onClose={handleClose}>
@@ -45,9 +36,7 @@ export default function NotePreviewModal() {
             {note.tag && <span className={css.tag}>{note.tag}</span>}
           </div>
           <p className={css.content}>{note.content}</p>
-          <p className={css.date}>
-            {new Date(note.createdAt).toLocaleDateString()}
-          </p>
+          <p className={css.date}>{new Date(note.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
     </Modal>

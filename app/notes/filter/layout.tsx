@@ -3,7 +3,7 @@ import css from './layout.module.css';
 
 interface FilterLayoutProps {
   sidebar: ReactNode;
-  modal: ReactNode;  // ← @modal замість content
+  modal: ReactNode;
   children: ReactNode;
 }
 
