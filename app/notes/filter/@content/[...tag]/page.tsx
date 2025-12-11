@@ -34,7 +34,9 @@ export default function FilteredNotesPage() {
   });
 
   const notes = data?.notes ?? [];
-  const totalPages = data?.totalPages ?? 0;
+
+  // 🔥 ВИПРАВЛЕНО — рахуємо totalPages з total / perPage
+  const totalPages = data ? Math.ceil(data.total / data.perPage) : 0;
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
