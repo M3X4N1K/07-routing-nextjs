@@ -3,19 +3,22 @@ import css from './layout.module.css';
 
 interface FilterLayoutProps {
   sidebar: ReactNode;
-  content: ReactNode;
+  modal: ReactNode;  // ← @modal замість content
   children: ReactNode;
 }
 
 export default function FilterLayout({
   sidebar,
-  content,
+  modal,
   children,
 }: FilterLayoutProps) {
   return (
-    <div className={css.container}>
-      <aside className={css.sidebar}>{sidebar}</aside>
-      <main className={css.notesWrapper}>{content || children}</main>
-    </div>
+    <>
+      <div className={css.container}>
+        <aside className={css.sidebar}>{sidebar}</aside>
+        <main className={css.notesWrapper}>{children}</main>
+      </div>
+      {modal}
+    </>
   );
 }

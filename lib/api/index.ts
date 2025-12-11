@@ -1,13 +1,27 @@
 import axios from "axios";
 import type { Note, NoteTag } from "../../types/note";
 
-const API_URL = "https://notehub.net.ua/api/notes";
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+// ==========================
+//  CONFIG
+// ==========================
 
-// Додаємо токен в заголовки
-axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+// Використовуємо змінну середовища
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001/api/notes";
 
-// ---------- Типи ----------
+// Токен (опційний)
+const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN ?? "";
+
+// Створюємо axios-інстанс
+const api = axios.create({
+  baseURL: API_URL,
+  headers: token ? { Authorization: `Bearer ${token}` } : {},
+});
+
+// ==========================
+//  Типи
+// ==========================
+
 export interface CreateNotePayload {
   title: string;
   content?: string;
@@ -21,43 +35,49 @@ export interface FetchNotesResponse {
   perPage: number;
 }
 
-// ---------- API Функції ----------
+// ==========================
+//  API функції
+// ==========================
 
-// Отримати всі нотатки + фільтр по тегу, пошуку, пагінації
+// --- Отримати всі нотатки + фільтр
 export async function fetchNotes(params?: {
   page?: number;
   perPage?: number;
   search?: string;
-  tag?: string; // ← ДОДАНО
+  tag?: string;
 }): Promise<FetchNotesResponse> {
   const { page = 1, perPage = 12, search, tag } = params || {};
 
-  const response = await axios.get(`${API_URL}`, {
+  const response = await api.get("", {
     params: {
       page,
       perPage,
       ...(search && { search }),
-      ...(tag && { tag }), // ← ДОДАНО
+      ...(tag && { tag }),
     },
   });
 
   return response.data;
 }
 
-// Отримати одну нотатку
+// --- Отримати одну нотатку
 export async function fetchNoteById(id: string): Promise<Note> {
-  const response = await axios.get(`${API_URL}/${id}`);
+  const response = await api.get(`/${id}`);
   return response.data;
 }
 
-// Створити нову нотатку
-export async function createNote(payload: CreateNotePayload): Promise<Note> {
-  const response = await axios.post(API_URL, payload);
+// --- Створити нотатку
+export async function createNote(
+  payload: CreateNotePayload
+): Promise<Note> {
+  const response = await api.post("", payload);
   return response.data;
 }
 
-// Видалити нотатку
-export async function deleteNote(id: string): Promise<{ success: boolean }> {
-  const response = await axios.delete(`${API_URL}/${id}`);
+// --- Видалити нотатку
+export async function deleteNote(
+  id: string
+): Promise<{ success: boolean }> {
+  const response = await api.delete(`/${id}`);
   return response.data;
 }

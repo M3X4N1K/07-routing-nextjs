@@ -15,7 +15,9 @@ const PER_PAGE = 12;
 
 export default function FilteredNotesPage() {
   const params = useParams();
-  const tag = params.tag?.[0];
+  const slug = params.slug as string[];
+  const tag = slug?.[0]; // Перший сегмент з [...slug]
+  
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,9 +36,7 @@ export default function FilteredNotesPage() {
   });
 
   const notes = data?.notes ?? [];
-
-  // 🔥 ВИПРАВЛЕНО — рахуємо totalPages з total / perPage
-  const totalPages = data ? Math.ceil(data.total / data.perPage) : 0;
+  const totalPages = data?.totalPages ?? 0;
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
