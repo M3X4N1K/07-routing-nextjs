@@ -1,16 +1,14 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
 import css from './Modal.module.css';
 
 interface ModalProps {
   children: ReactNode;
+  onClose: () => void;
 }
 
-export default function Modal({ children }: ModalProps) {
-  const router = useRouter();
-
+export default function Modal({ children, onClose }: ModalProps) {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -18,12 +16,8 @@ export default function Modal({ children }: ModalProps) {
     };
   }, []);
 
-  const handleClose = () => {
-    router.back();
-  };
-
   return (
-    <div className={css.backdrop} onClick={handleClose}>
+    <div className={css.backdrop} onClick={onClose}>
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>

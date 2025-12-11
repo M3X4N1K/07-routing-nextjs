@@ -16,14 +16,31 @@ export interface CreateNotePayload {
 
 export interface FetchNotesResponse {
   notes: Note[];
+  total: number;
+  page: number;
+  perPage: number;
 }
 
 // ---------- API Функції ----------
 
-// Отримати всі нотатки + фільтр по тегу
-export async function fetchNotes(tag?: string): Promise<FetchNotesResponse> {
-  const params = tag ? { tag } : {};
-  const response = await axios.get(API_URL, { params });
+// Отримати всі нотатки + фільтр по тегу, пошуку, пагінації
+export async function fetchNotes(params?: {
+  page?: number;
+  perPage?: number;
+  search?: string;
+  tag?: string; // ← ДОДАНО
+}): Promise<FetchNotesResponse> {
+  const { page = 1, perPage = 12, search, tag } = params || {};
+
+  const response = await axios.get(`${API_URL}`, {
+    params: {
+      page,
+      perPage,
+      ...(search && { search }),
+      ...(tag && { tag }), // ← ДОДАНО
+    },
+  });
+
   return response.data;
 }
 
@@ -44,5 +61,3 @@ export async function deleteNote(id: string): Promise<{ success: boolean }> {
   const response = await axios.delete(`${API_URL}/${id}`);
   return response.data;
 }
-
-// (при потребі можна додати updateNote)
